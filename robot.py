@@ -1,1 +1,28 @@
-print("Fleet Management System")
+from abc import ABC, abstractmethod
+
+class Robot(ABC):
+    manufacturer = "RoboTik"
+    population = 0
+
+    def __init__(self, name, battery=100):
+        self.name = name
+        self.battery = battery
+        Robot.population += 1
+
+    @property
+    def battery(self):
+        return self._battery
+    
+    @battery.setter
+    def battery(self, value):
+        self._battery = max(0, min(100, value))
+    
+    def __str__(self):
+        return f"{self.name} (Battery: {self.battery}%)"
+    
+    def __repr__(self):
+        return f"{type(self).__name__}(name='{self.name}', battery={self.battery})"\
+    
+    @abstractmethod
+    def perform_task(self):
+        pass
