@@ -12,12 +12,12 @@ class InsufficientBatteryError(Exception):
             f"but only has {available}%."
         )
 
-def log_task(func):
+def log_action(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        print(f"Starting: {func.__name__}")
+        logging.info(f"Starting: {func.__name__}")
         result = func(*args, **kwargs)
-        print(f"Finished: {func.__name__}")
+        logging.info(f"Finished: {func.__name__}")
         return result
 
     return wrapper
@@ -78,7 +78,7 @@ class DroneRobot(Robot):
         super().__init__(name, battery)
         self.max_altitude = max_altitude
 
-    @log_task
+    @log_action
     def perform_task(self):
         self.use_battery(20)
         return f"{self.name} is flying at an altitude of {self.max_altitude}m."
@@ -88,7 +88,10 @@ class CleaningRobot(Robot):
         super().__init__(name, battery)
         self.dust_capacity = dust_capacity
 
-    @log_task
+    @log_action
     def perform_task(self):
         self.use_battery(10)
         return f"{self.name} is cleaning with {self.dust_capacity} dust capacity."
+    
+    print(DroneRobot.perform_task.__name__)
+
