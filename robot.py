@@ -23,7 +23,7 @@ def log_action(func):
     return wrapper
 
 class Robot(ABC):
-    manufacturer = "RoboTik"
+    manufacturer = "RoboTik nyort"
     population = 0
 
     def __init__(self, name, battery=100):
