@@ -26,3 +26,12 @@ class Robot(ABC):
     @abstractmethod
     def perform_task(self):
         pass
+    
+class DroneRobot(Robot):
+        def __init__(self, name, battery=100, max_altitude=100):
+            super().__init__(name, battery)
+            self.max_altitude = max_altitude
+        
+        def perform_task(self):
+            return f"{self.name} is flying at an altitude of {self.max_altitude}m."
+        
