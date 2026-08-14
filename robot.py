@@ -51,6 +51,7 @@ class Robot(ABC):
                 self.name, amount, self.battery
             )
         self.battery -= amount
+
     @classmethod
     def from_config(cls, config):
         return cls(config["name"], config.get("battery", 100))
@@ -93,5 +94,63 @@ class CleaningRobot(Robot):
         self.use_battery(10)
         return f"{self.name} is cleaning with {self.dust_capacity} dust capacity."
     
-    print(DroneRobot.perform_task.__name__)
+print("=== Fleet Report ===")
 
+drone = DroneRobot("Aqua-Drone", 50, 200)
+cleaner = CleaningRobot("Roomba", 50, 10)
+
+fleet_report([drone, cleaner])
+
+print("\n=== Drone Task ===")
+run_task_safely(drone)
+
+print("\n=== Cleaning Task ===")
+run_task_safely(cleaner)
+
+print("\n=== Insufficient Battery ===")
+
+low_drone = DroneRobot("Low-Drone", 5, 100)
+run_task_safely(low_drone)
+
+print("\n=== From Config ===")
+
+config = {
+    "name": "Config-Drone",
+    "battery": 15
+}
+
+config_drone = DroneRobot.from_config(config)
+print(config_drone)
+
+print("\n=== Repr ===")
+print(repr(config_drone))
+
+print("\n=== Decorator Test ===")
+print(DroneRobot.perform_task.__name__)
+
+print("\n=== Population ===")
+print(Robot.population)
+
+"""class Bug:
+items = []
+tyek = Bug()
+ekis = Bug()
+
+tyek.items.append("T")
+
+print("Bug:")
+print(ekis.items)
+print(tyek.items)
+
+class Fix:
+    def __init__(self):
+        self.items = []
+
+tyek = Fix()
+ekis = Fix()
+
+tyek.items.append("T")
+
+print("Fix:")
+print(ekis.items)
+print(tyek.items)"""
